@@ -5,43 +5,43 @@
  * Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
  */
 
- /*
- * piechart method on paper
- */
-/*\
- * Paper.piechart
- [ method ]
- **
- * Creates a pie chart
- **
- > Parameters
- **
- - cx (number) x coordinate of the chart
- - cy (number) y coordinate of the chart
- - r (integer) radius of the chart
- - values (array) values used to plot
- - opts (object) options for the chart
- o {
- o minPercent (number) minimal percent threshold which will have a slice rendered. Sliced corresponding to data points below this threshold will be collapsed into 1 additional slice. [default `1`]
- o maxSlices (number) a threshold for how many slices should be rendered before collapsing all remaining slices into 1 additional slice (to focus on most important data points). [default `100`]
- o stroke (string) color of the circle stroke in HTML color format [default `"#FFF"`]
- o strokewidth (integer) width of the chart stroke [default `1`]
- o init (boolean) whether or not to show animation when the chart is ready [default `false`]
- o colors (array) colors be used to plot the chart
- o href (array) urls to to set up clicks on chart slices
- o legend (array) array containing strings that will be used in a legend. Other label options work if legend is defined.
- o legendcolor (string) color of text in legend [default `"#000"`]
- o legendothers (string) text that will be used in legend to describe options that are collapsed into 1 slice, because they are too small to render [default `"Others"`]
- o legendmark (string) symbol used as a bullet point in legend that has the same colour as the chart slice [default `"circle"`]
- o legendpos (string) position of the legend on the chart [default `"east"`]. Other options are `"north"`, `"south"`, `"west"`
- o }
- **
- = (object) path element of the popup
- > Usage
- | r.piechart(cx, cy, r, values, opts)
- \*/
- 
-(function () {
+define(['chart/graphael/g.raphael'], function (Raphael) {
+
+   /*
+   * piechart method on paper
+   */
+  /*\
+   * Paper.piechart
+   [ method ]
+   **
+   * Creates a pie chart
+   **
+   > Parameters
+   **
+   - cx (number) x coordinate of the chart
+   - cy (number) y coordinate of the chart
+   - r (integer) radius of the chart
+   - values (array) values used to plot
+   - opts (object) options for the chart
+   o {
+   o minPercent (number) minimal percent threshold which will have a slice rendered. Sliced corresponding to data points below this threshold will be collapsed into 1 additional slice. [default `1`]
+   o maxSlices (number) a threshold for how many slices should be rendered before collapsing all remaining slices into 1 additional slice (to focus on most important data points). [default `100`]
+   o stroke (string) color of the circle stroke in HTML color format [default `"#FFF"`]
+   o strokewidth (integer) width of the chart stroke [default `1`]
+   o init (boolean) whether or not to show animation when the chart is ready [default `false`]
+   o colors (array) colors be used to plot the chart
+   o href (array) urls to to set up clicks on chart slices
+   o legend (array) array containing strings that will be used in a legend. Other label options work if legend is defined.
+   o legendcolor (string) color of text in legend [default `"#000"`]
+   o legendothers (string) text that will be used in legend to describe options that are collapsed into 1 slice, because they are too small to render [default `"Others"`]
+   o legendmark (string) symbol used as a bullet point in legend that has the same colour as the chart slice [default `"circle"`]
+   o legendpos (string) position of the legend on the chart [default `"east"`]. Other options are `"north"`, `"south"`, `"west"`
+   o }
+   **
+   = (object) path element of the popup
+   > Usage
+   | r.piechart(cx, cy, r, values, opts)
+   \*/
 
     function Piechart(paper, cx, cy, r, values, opts) {
         opts = opts || {};
@@ -94,12 +94,12 @@
                 total += values[i];
                 values[i] = { value: values[i], order: i, valueOf: function () { return this.value; } };
             }
-            
+
             //values are sorted numerically
             values.sort(function (a, b) {
                 return b.value - a.value;
             });
-            
+
             for (i = 0; i < len; i++) {
                 if (defcut && values[i] * 100 / total < minPercent) {
                     cut = i;
@@ -282,15 +282,16 @@
 
         return chart;
     };
-    
+
     //inheritance
     var F = function() {};
     F.prototype = Raphael.g;
     Piechart.prototype = new F;
-    
+
     //public
     Raphael.fn.piechart = function(cx, cy, r, values, opts) {
         return new Piechart(this, cx, cy, r, values, opts);
     }
-    
-})();
+
+    return Raphael;
+});
