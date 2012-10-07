@@ -4,7 +4,7 @@
  * Copyright (c) 2009-2012 Dmitry Baranovskiy (http://g.raphaeljs.com)
  * Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
  */
-define(['chart/graphael/g.raphael'], function (Raphael) {
+define(['./g.raphael'], function (Raphael) {
 
     var colorValue = function (value, total, s, b) {
         return 'hsb(' + [Math.min((1 - value / total) * .4, 1), s || .75, b || .75] + ')';

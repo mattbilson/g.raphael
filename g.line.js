@@ -6,7 +6,7 @@
  */
 
 
-define(['chart/graphael/g.raphael'], function (Raphael) {
+define(['./g.raphael'], function (Raphael) {
 
     function shrink(values, dim) {
         var k = values.length / dim,
