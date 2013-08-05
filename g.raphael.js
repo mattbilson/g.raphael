@@ -4,7 +4,7 @@
    * Copyright (c) 2009-2012 Dmitry Baranovskiy (http://g.raphaeljs.com)
    * Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
    */
-define(['chart/raphael/raphael.amd'],
+define(['raphael'],
     function(Raphael) {
 
   /*
