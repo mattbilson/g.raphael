@@ -171,6 +171,8 @@ define(['./g.raphael'], function (Raphael) {
         var chartinst = this,
             type = opts.type || "square",
             gutter = parseFloat(opts.gutter || "20%"),
+            multiSeriesGutter = parseFloat(opts.multiSeriesGutter || "0%"),
+
             chart = paper.set(),
             bars = paper.set(),
             covers = paper.set(),
@@ -219,6 +221,7 @@ define(['./g.raphael'], function (Raphael) {
 
         var barwidth = width / (len * (100 + gutter) + gutter) * 100,
             barhgutter = barwidth * gutter / 100,
+            multiSeriesBarHGutter  = barwidth * multiSeriesGutter / 100,
             barvgutter = opts.vgutter == null ? 20 : opts.vgutter,
             stack = [],
             X = x + barhgutter,
@@ -226,6 +229,7 @@ define(['./g.raphael'], function (Raphael) {
 
         if (!opts.stretch) {
             barhgutter = Math.round(barhgutter);
+            multiSeriesBarHGutter = Math.round(multiSeriesBarHGutter);
             barwidth = Math.floor(barwidth);
         }
 
@@ -252,7 +256,7 @@ define(['./g.raphael'], function (Raphael) {
                 bar.value = multi ? values[j][i] : values[i];
 
                 if (!opts.stacked) {
-                    X += barwidth;
+                    X += barwidth + multiSeriesBarHGutter;
                 } else {
                     stack.push(bar);
                 }
